@@ -1,0 +1,142 @@
+[
+  {
+    "id": "dallas-us",
+    "city": "Dallas",
+    "country": "United States",
+    "lat": 32.7767,
+    "lng": -96.7970,
+    "visitedOn": "2025-10-19",
+    "note": "BLDP trip",
+    "captions": {
+      "1.jpeg": "Texas Star Ferris Wheel at the State Fair of Texas",
+      "2.jpeg": "Iconic longhorn sculpture at Fair Park",
+      "3.jpeg": "Rodeo night at the arena"
+    }
+  },
+  {
+    "id": "fort-worth-us",
+    "city": "Fort Worth",
+    "country": "United States",
+    "lat": 32.7555,
+    "lng": -97.3308,
+    "visitedOn": "2024-09-07",
+    "note": "First TLC visit",
+    "captions": {
+      "1.jpeg": "Dinner with friends",
+      "2.jpeg": "Stockyards Station",
+      "3.jpeg": "Classic lifted truck"
+    }
+  },
+  {
+    "id": "pahalgam-in",
+    "city": "Pahalgam",
+    "country": "India",
+    "lat": 34.0161,
+    "lng": 75.3150,
+    "visitedOn": "2024-05-27",
+    "note": "Anniversary Trip",
+    "captions": {
+      "1.jpeg": "Lovely kamshmiri kids",
+      "2.jpeg": "Scenic valley",
+      "3.jpeg": "Sparkling clean and chilling cold glacier water"
+    }
+  },
+  {
+    "id": "gulmarg-in",
+    "city": "Gulmarg",
+    "country": "India",
+    "lat": 34.0462,
+    "lng": 74.3803,
+    "visitedOn": "2024-05-26",
+    "note": "Anniversary Trip",
+    "captions": {
+      "1.jpeg": "Gondola ride through breathtaking views",
+      "2.jpeg": "Gondola ride through breathtaking views",
+      "3.jpeg": "Scenic Snowy beauty"
+    }
+  },
+  {
+    "id": "sonmarg-in",
+    "city": "Sonmarg",
+    "country": "India",
+    "lat": 34.3025,
+    "lng": 75.2947,
+    "visitedOn": "2024-05-24",
+    "note": "Anniversary Trip",
+    "captions": {
+      "1.jpeg": "Horse riding towards the snow-capped Himalayan peaks",
+      "2.jpeg": "Panoramic view of the Sonmarg valley",
+      "3.jpeg": "Sitting on a glacier with the valley stretching below"
+    }
+  },
+  {
+    "id": "srinagar-in",
+    "city": "Srinagar",
+    "country": "India",
+    "lat": 34.0837,
+    "lng": 74.7973,
+    "visitedOn": "2024-05-22",
+    "note": "Anniversary Trip",
+    "captions": {
+      "1.jpeg": "Scenic boat ride on Dal lake",
+      "2.jpeg": "Scenic boat ride on Dal lake",
+      "3.jpeg": "Beautiful Dal lake"
+    }
+  },
+  {
+    "id": "udupi-in",
+    "city": "Udupi",
+    "country": "India",
+    "lat": 13.3409,
+    "lng": 74.7421,
+    "visitedOn": "2024-01-01",
+    "note": "Trip with Subhu and Harsh",
+    "captions": {
+      "1.jpeg": "Fun at St. mary island",
+      "2.jpeg": "Beautiful beaches on the way to murudeshwar",
+      "3.jpeg": "Scenic and peaceful kayaking"
+    }
+  },
+  {
+    "id": "jaipur-in",
+    "city": "Jaipur",
+    "country": "India",
+    "lat": 26.9124,
+    "lng": 75.7873,
+    "visitedOn": "2025-05-07",
+    "note": "Nikhil's wedding trip",
+    "captions": {
+      "1.jpeg": "Beuatiful symmetric artwork in Amer fort",
+      "2.jpeg": "Amer fort visit with friends",
+      "3.jpeg": "Hawa mahal"
+    }
+  },
+  {
+    "id": "goa-in",
+    "city": "Goa",
+    "country": "India",
+    "lat": 15.2993,
+    "lng": 74.1240,
+    "visitedOn": "2025-01-14",
+    "note": "Holi celebration trip",
+    "captions": {
+      "1.jpeg": "Amazing Bean me up cafe",
+      "2.jpeg": "Views at Chapora fort at vagator",
+      "3.jpeg": "Holi party in cruise"
+    }
+  },
+  {
+    "id": "hampi-in",
+    "city": "Hampi",
+    "country": "India",
+    "lat": 15.3350,
+    "lng": 76.4600,
+    "visitedOn": "2025-06-16",
+    "note": "Birthday trip in UNESCO City of India",
+    "captions": {
+      "1.jpeg": "Hampi Stone Chariot",
+      "2.jpeg": "Historic beautiful Vijay Vittala temple",
+      "3.jpeg": "Beautiful Virupaksha temple"
+    }
+  }
+]

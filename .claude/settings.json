@@ -1,0 +1,69 @@
+{
+  "apiKeyHelper": "/Users/a0230069/.local/node/bin/node /Users/a0230069/.local/npm-global/lib/node_modules/ti-claude-code-install/lib/get-token.js",
+  "env": {
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
+    "ANTHROPIC_BASE_URL": "https://llmgateway.itg.ti.com",
+    "ANTHROPIC_MODEL": "claude-sonnet-4-6[1m]",
+    "ANTHROPIC_SMALL_FAST_MODEL": "claude-haiku-4-5",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-8[1m]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6[1m]",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5",
+    "ANTHROPIC_CUSTOM_MODEL_OPTION": "nvidia/nemotron-3-super",
+    "ANTHROPIC_CUSTOM_MODEL_OPTION_NAME": "Nemotron 3 Super",
+    "ANTHROPIC_CUSTOM_MODEL_OPTION_DESCRIPTION": "NVIDIA Nemotron via TI LiteLLM gateway",
+    "CLAUDE_CODE_API_KEY_HELPER_TTL_MS": "540000",
+    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_INSTALLATION_CHECKS": "1",
+    "DISABLE_TELEMETRY": "1",
+    "NODE_EXTRA_CA_CERTS": "/Users/a0230069/.local/certs/ti-ca-bundle.pem",
+    "ANTHROPIC_CUSTOM_HEADERS": "x-litellm-team-id: DAP_SM_DES_DATA_INTEGRATION_DEV"
+  },
+  "permissions": {
+    "deny": [
+      "WebSearch(*)",
+      "WebFetch(*)"
+    ],
+    "defaultMode": "auto"
+  },
+  "model": "nvidia/Nemotron-3-Ultra[1m]",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd ~/.claude/AI_ToolBox && NODE_EXTRA_CA_CERTS=ti-ca-bundle.pem node dist/proxy/index.js --discover-all"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "ti-claude-statusline"
+  },
+  "extraKnownMarketplaces": {
+    "ti-claude-code-marketplace": {
+      "source": {
+        "source": "git",
+        "url": "git@bitbucket.itg.ti.com:swati/ti-claude-code-marketplace.git"
+      }
+    },
+    "ticom-claude-code-marketplace": {
+      "source": {
+        "source": "git",
+        "url": "git@bitbucket.itg.ti.com:scm/desc/ticom-claude-code-marketplace.git"
+      }
+    },
+    "ti-claude-marketplace": {
+      "source": {
+        "source": "url",
+        "url": "https://artifactory.itg.ti.com/artifactory/npm-release-local/ti-claude-marketplace/marketplace.json"
+      },
+      "autoUpdate": true
+    }
+  }
+}
