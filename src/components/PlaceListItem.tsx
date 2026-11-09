@@ -1,27 +1,25 @@
 import { memo, useRef, useEffect, useState } from 'react';
 import type { Place } from '../types';
-import { usePhotos, getPhotoCount } from '../hooks/usePhotos';
+import { usePhotos } from '../hooks/usePhotos';
 import { format } from 'date-fns';
 
 interface PlaceListItemProps {
   place: Place;
   isSelected: boolean;
   isHovered: boolean;
-  onClick: () => void;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  // Stable callbacks — not bound per-item so React.memo actually works
+  onSelect: (place: Place) => void;
+  onHoverChange: (id: string | null) => void;
 }
 
 export const PlaceListItem = memo(function PlaceListItem({
   place,
   isSelected,
   isHovered,
-  onClick,
-  onMouseEnter,
-  onMouseLeave,
+  onSelect,
+  onHoverChange,
 }: PlaceListItemProps) {
-  const photos = usePhotos(place.id);
-  const photoCount = getPhotoCount(place.id);
+  const { photos, count: photoCount } = usePhotos(place.id);
   const firstPhoto = photos[0];
   const [imgError, setImgError] = useState(false);
 
@@ -37,11 +35,12 @@ export const PlaceListItem = memo(function PlaceListItem({
   return (
     <div
       ref={itemRef}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onClick={() => onSelect(place)}
+      onMouseEnter={() => onHoverChange(place.id)}
+      onMouseLeave={() => onHoverChange(null)}
       className={`group relative flex gap-3 pl-4 pr-3 py-3 rounded-xl cursor-pointer select-none
         transition-colors duration-150
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-1
         ${isSelected
           ? 'bg-[var(--color-accent-bg)]'
           : 'hover:bg-[var(--color-bg-secondary)]'
@@ -53,13 +52,13 @@ export const PlaceListItem = memo(function PlaceListItem({
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onClick();
+          onSelect(place);
         }
       }}
       aria-selected={isSelected}
       aria-label={`${place.city}, ${place.country}, visited ${formattedDate}`}
     >
-      {/* Left accent bar */}
+      {/* Selected accent bar */}
       {isSelected && (
         <div
           className="absolute left-0 top-3 bottom-3 w-[3px] bg-[var(--color-accent)] rounded-r-full"
@@ -106,7 +105,8 @@ export const PlaceListItem = memo(function PlaceListItem({
         </div>
 
         <div className="flex items-center gap-2 mt-1.5">
-          <span className="inline-block text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-bg-secondary)] px-2 py-[3px] rounded-md font-medium leading-none border border-[var(--color-border)]">
+          <span className="inline-block text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-bg-secondary)]
+                          px-2 py-[3px] rounded-md font-medium leading-none border border-[var(--color-border)]">
             {formattedDate}
           </span>
           {photoCount > 0 && (

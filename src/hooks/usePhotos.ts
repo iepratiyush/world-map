@@ -1,29 +1,19 @@
 import { useMemo } from 'react';
-import type { PlacePhoto } from '../types';
+import type { PlacePhoto, Place } from '../types';
 import placesData from '../data/places.json';
 
-// Get photos from places.json (Cloudinary URLs)
-export function usePhotos(placeId: string): PlacePhoto[] {
+const places = placesData as Place[];
+
+export function usePhotos(placeId: string): { photos: PlacePhoto[]; count: number } {
   return useMemo(() => {
-    const place = (placesData as any[]).find(p => p.id === placeId);
-    if (!place || !place.photos) return [];
-    return place.photos;
+    const place = places.find((p) => p.id === placeId);
+    const photos = place?.photos ?? [];
+    return { photos, count: photos.length };
   }, [placeId]);
 }
 
-export function useAllPhotos(): Record<string, PlacePhoto[]> {
-  return useMemo(() => {
-    const grouped: Record<string, PlacePhoto[]> = {};
-    for (const place of placesData as any[]) {
-      if (place.photos) {
-        grouped[place.id] = place.photos;
-      }
-    }
-    return grouped;
-  }, []);
-}
-
+// Synchronous helper for non-hook contexts (e.g. cluster icon sizing)
 export function getPhotoCount(placeId: string): number {
-  const place = (placesData as any[]).find(p => p.id === placeId);
-  return place?.photos?.length || 0;
+  const place = places.find((p) => p.id === placeId);
+  return place?.photos?.length ?? 0;
 }

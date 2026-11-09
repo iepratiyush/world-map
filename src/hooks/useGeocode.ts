@@ -68,6 +68,7 @@ export function useGeocode() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const isMountedRef = useRef(true);
   const abortControllerRef = useRef<AbortController | null>(null);
   const lastRequestTimeRef = useRef<number>(0);
   const pendingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -130,19 +131,19 @@ export function useGeocode() {
         // Cache results
         geocodeCache.set(cacheKey, { data, timestamp: Date.now() });
 
-        if (!abortControllerRef.current.signal.aborted) {
+        if (!abortControllerRef.current.signal.aborted && isMountedRef.current) {
           setSuggestions(data.map(resultToSuggestion));
           setError(null);
         }
 
         lastRequestTimeRef.current = Date.now();
       } catch (err) {
-        if (err instanceof Error && err.name !== 'AbortError') {
+        if (err instanceof Error && err.name !== 'AbortError' && isMountedRef.current) {
           setError(err.message);
           setSuggestions([]);
         }
       } finally {
-        if (!abortControllerRef.current?.signal.aborted) {
+        if (!abortControllerRef.current?.signal.aborted && isMountedRef.current) {
           setLoading(false);
         }
       }
@@ -166,15 +167,13 @@ export function useGeocode() {
     }
   }, []);
 
-  // Cleanup on unmount
+  // Cleanup on unmount: cancel in-flight requests and block any pending state updates
   useEffect(() => {
+    isMountedRef.current = true;
     return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-      if (pendingTimeoutRef.current) {
-        clearTimeout(pendingTimeoutRef.current);
-      }
+      isMountedRef.current = false;
+      abortControllerRef.current?.abort();
+      if (pendingTimeoutRef.current) clearTimeout(pendingTimeoutRef.current);
     };
   }, []);
 

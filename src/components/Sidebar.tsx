@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, type ReactNode } from 'react';
 import { SearchBox } from './SearchBox';
 import { PlaceList } from './PlaceList';
 import { ThemeToggle } from './ThemeToggle';
@@ -23,12 +23,12 @@ interface SidebarProps {
   theme: 'light' | 'dark';
 }
 
-function StatBadge({
+const StatBadge = memo(function StatBadge({
   icon,
   label,
   accent = false,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   label: string;
   accent?: boolean;
 }) {
@@ -44,9 +44,9 @@ function StatBadge({
       {label}
     </div>
   );
-}
+});
 
-function SidebarHeader({
+const SidebarHeader = memo(function SidebarHeader({
   placeCount,
   countryCount,
   onToggleTheme,
@@ -89,7 +89,7 @@ function SidebarHeader({
       </div>
     </div>
   );
-}
+});
 
 export const Sidebar = memo(function Sidebar({
   places,

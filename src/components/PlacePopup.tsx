@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 import type { Place } from '../types';
-import { usePhotos, getPhotoCount } from '../hooks/usePhotos';
+import { usePhotos } from '../hooks/usePhotos';
 import { format } from 'date-fns';
 
 interface PlacePopupProps {
@@ -16,8 +16,7 @@ export const PlacePopup = memo(function PlacePopup({
   onClose,
   onViewPhotos,
 }: PlacePopupProps) {
-  const photos = usePhotos(place.id);
-  const photoCount = getPhotoCount(place.id);
+  const { photos, count: photoCount } = usePhotos(place.id);
   const firstPhoto = photos[0];
   const [imgError, setImgError] = useState(false);
 

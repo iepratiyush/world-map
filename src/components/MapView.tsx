@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
@@ -92,7 +92,7 @@ interface MapViewProps {
   mapRef?: React.RefObject<L.Map | null>;
 }
 
-export function MapView({
+export const MapView = memo(function MapView({
   places,
   selectedPlaceId,
   onPlaceClick,
@@ -223,7 +223,7 @@ export function MapView({
       )}
     </MapContainer>
   );
-}
+});
 
 // Zoom controls component
 interface ZoomControlsProps {

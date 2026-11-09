@@ -23,7 +23,7 @@ function AppContent() {
   const [lightboxPlace, setLightboxPlace] = useState<Place | null>(null);
 
   const places = useMemo(() => placesData as Place[], []);
-  const lightboxPhotos = usePhotos(lightboxPlace?.id || '');
+  const { photos: lightboxPhotos } = usePhotos(lightboxPlace?.id || '');
 
 
   const handlePlaceClick = useCallback((place: Place) => {

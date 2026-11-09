@@ -44,10 +44,14 @@ export const SearchBox = memo(function SearchBox({
 
     switch (e.key) {
       case 'ArrowDown':
-        setHighlightedIndex((prev) => Math.min(prev + 1, suggestions.length - 1));
+        setHighlightedIndex((prev) =>
+          suggestions.length === 0 ? -1 : (prev + 1) % suggestions.length
+        );
         break;
       case 'ArrowUp':
-        setHighlightedIndex((prev) => Math.max(prev - 1, -1));
+        setHighlightedIndex((prev) =>
+          suggestions.length === 0 ? -1 : (prev <= 0 ? suggestions.length - 1 : prev - 1)
+        );
         break;
       case 'Enter':
         if (highlightedIndex >= 0 && suggestions[highlightedIndex]) {

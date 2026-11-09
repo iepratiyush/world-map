@@ -1,4 +1,4 @@
-import { memo, useMemo, useCallback } from 'react';
+import { memo, useMemo } from 'react';
 import type { Place, SortOrder } from '../types';
 import { PlaceListItem } from './PlaceListItem';
 
@@ -54,19 +54,13 @@ export const PlaceList = memo(function PlaceList({
           return new Date(a.visitedOn).getTime() - new Date(b.visitedOn).getTime();
         case 'az':
           return `${a.city}, ${a.country}`.localeCompare(`${b.city}, ${b.country}`);
+        default:
+          return 0;
       }
     });
 
     return result;
   }, [places, filter, sortOrder]);
-
-  const handleItemClick = useCallback((place: Place) => {
-    onPlaceClick(place);
-  }, [onPlaceClick]);
-
-  const handleItemHover = useCallback((placeId: string | null) => {
-    onPlaceHover(placeId);
-  }, [onPlaceHover]);
 
   const filteredCount = processedPlaces.length;
   const isFiltered = !!filter.trim() && filteredCount !== totalCount;
@@ -147,7 +141,7 @@ export const PlaceList = memo(function PlaceList({
           </div>
         )}
 
-        {/* Places list */}
+        {/* Places list — pass stable callbacks directly; no inline arrows so React.memo works */}
         <div role="list" aria-label="Visited places">
           {processedPlaces.map((place) => (
             <PlaceListItem
@@ -155,9 +149,8 @@ export const PlaceList = memo(function PlaceList({
               place={place}
               isSelected={selectedPlaceId === place.id}
               isHovered={hoveredPlaceId === place.id}
-              onClick={() => handleItemClick(place)}
-              onMouseEnter={() => handleItemHover(place.id)}
-              onMouseLeave={() => handleItemHover(null)}
+              onSelect={onPlaceClick}
+              onHoverChange={onPlaceHover}
             />
           ))}
         </div>
