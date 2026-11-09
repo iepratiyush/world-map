@@ -59,12 +59,30 @@ const SidebarHeader = memo(function SidebarHeader({
 }) {
   return (
     <div className="px-5 pt-5 pb-4 border-b border-[var(--color-border)] shrink-0">
-      <div className="flex items-start justify-between mb-3">
-        <h2 className="text-[15px] font-semibold text-[var(--color-text)] leading-snug pr-2">
-          Trip down the memory lane
-        </h2>
+      {/* App name + theme toggle */}
+      <div className="flex items-center justify-between mb-1">
+        <div className="flex items-center gap-2">
+          {/* Map-pin icon */}
+          <svg
+            width="18" height="18" viewBox="0 0 24 24"
+            fill="var(--color-accent)" stroke="none"
+            aria-hidden="true"
+          >
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <h1 className="text-lg font-bold text-[var(--color-text)] tracking-tight leading-none">
+            Pratyush's Atlas
+          </h1>
+        </div>
         <ThemeToggle onToggle={onToggleTheme} theme={theme} />
       </div>
+
+      {/* Tagline */}
+      <p className="text-xs text-[var(--color-text-secondary)] mb-3 pl-[26px]">
+        Trip down the memory lane
+      </p>
+
+      {/* Stats */}
       <div className="flex items-center gap-2">
         <StatBadge
           accent
