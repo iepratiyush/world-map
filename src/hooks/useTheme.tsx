@@ -37,14 +37,10 @@ function getInitialState(): { theme: Theme; resolvedTheme: Theme } {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
+  // applyTheme() runs synchronously inside getInitialState() so the CSS class is
+  // already on <html> before the first React paint — no FOUC.
   const [theme, setThemeState] = useState<Theme>(() => getInitialState().theme);
   const [resolvedTheme, setResolvedTheme] = useState<Theme>(() => getInitialState().resolvedTheme);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    // eslint-disable-next-line react/set-state-in-effect
-    setMounted(true);
-  }, []);
 
   // Media query listener for system theme changes
   useEffect(() => {
@@ -73,14 +69,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const toggleTheme = useCallback(() => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   }, [theme, setTheme]);
-
-  if (!mounted) {
-    return (
-      <ThemeContext.Provider value={{ theme: 'light', toggleTheme: () => {}, setTheme: () => {}, resolvedTheme: 'light' }}>
-        {children}
-      </ThemeContext.Provider>
-    );
-  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme, resolvedTheme }}>

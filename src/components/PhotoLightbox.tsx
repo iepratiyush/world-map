@@ -5,6 +5,8 @@ import Counter from 'yet-another-react-lightbox/plugins/counter';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import Captions from 'yet-another-react-lightbox/plugins/captions';
 import 'yet-another-react-lightbox/styles.css';
+import 'yet-another-react-lightbox/plugins/captions.css';
+import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import type { Place, PlacePhoto } from '../types';
 
 interface PhotoLightboxProps {
@@ -15,14 +17,13 @@ interface PhotoLightboxProps {
 }
 
 export function PhotoLightbox({ isOpen, onClose, place, photos }: PhotoLightboxProps) {
-  // Prepare lightbox items - PlacePhoto already has url and caption
   const items = useMemo(() => {
     if (!place || photos.length === 0) return [];
 
     return photos.map((photo) => ({
       src: photo.url,
-      title: photo.caption,
-      description: undefined,
+      // description (not title) → renders as a bottom overlay via captions.css
+      description: photo.caption || undefined,
       thumbnail: photo.url,
     }));
   }, [place, photos]);
@@ -35,13 +36,15 @@ export function PhotoLightbox({ isOpen, onClose, place, photos }: PhotoLightboxP
       slides={items}
       close={onClose}
       plugins={[Thumbnails, Counter, Zoom, Captions]}
-      index={0}
       thumbnails={{
         position: 'bottom',
+        height: 64,
         showToggle: items.length > 1,
       }}
       captions={{
-        showToggle: items.length > 1,
+        showToggle: false,
+        descriptionTextAlign: 'center',
+        descriptionMaxLines: 2,
       }}
     />
   );

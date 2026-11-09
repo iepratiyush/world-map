@@ -11,14 +11,15 @@ interface PlaceListProps {
   onPlaceClick: (place: Place) => void;
   onPlaceHover: (placeId: string | null) => void;
   onSortChange: (order: SortOrder) => void;
+  onFilterChange: (value: string) => void;
   totalCount: number;
   countryCount: number;
 }
 
 const SORT_OPTIONS: { value: SortOrder; label: string }[] = [
-  { value: 'newest', label: 'Newest first' },
-  { value: 'oldest', label: 'Oldest first' },
-  { value: 'az', label: 'A–Z' },
+  { value: 'newest', label: 'Newest' },
+  { value: 'oldest', label: 'Oldest' },
+  { value: 'az', label: 'A – Z' },
 ];
 
 export const PlaceList = memo(function PlaceList({
@@ -30,14 +31,12 @@ export const PlaceList = memo(function PlaceList({
   onPlaceClick,
   onPlaceHover,
   onSortChange,
+  onFilterChange,
   totalCount,
-  countryCount,
 }: PlaceListProps) {
-  // Sort and filter places
   const processedPlaces = useMemo(() => {
     let result = [...places];
 
-    // Apply filter
     if (filter.trim()) {
       const search = filter.toLowerCase().trim();
       result = result.filter(
@@ -47,7 +46,6 @@ export const PlaceList = memo(function PlaceList({
       );
     }
 
-    // Apply sort
     result.sort((a, b) => {
       switch (sortOrder) {
         case 'newest':
@@ -71,33 +69,27 @@ export const PlaceList = memo(function PlaceList({
   }, [onPlaceHover]);
 
   const filteredCount = processedPlaces.length;
-  const showFilterCount = filter.trim() && filteredCount !== totalCount;
+  const isFiltered = !!filter.trim() && filteredCount !== totalCount;
 
   return (
-    <div className="flex-1 overflow-y-auto scrollbar-thin p-4 space-y-2">
-      {/* Header with count and sort */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sticky top-0 bg-[var(--color-bg)] pb-3 border-b border-[var(--color-border)] z-10">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-          <div className="flex items-center gap-1.5 text-sm">
-            <span className="font-medium text-[var(--color-text)]">{filteredCount}</span>
-            <span className="text-[var(--color-text-secondary)]">place{filteredCount !== 1 ? 's' : ''}</span>
-            {showFilterCount && (
-              <>
-                <span className="text-[var(--color-text-secondary)]">of</span>
-                <span className="font-medium text-[var(--color-text)]">{totalCount}</span>
-              </>
-            )}
-            <span className="text-[var(--color-text-secondary)]">•</span>
-            <span className="font-medium text-[var(--color-text)]">{countryCount}</span>
-            <span className="text-[var(--color-text-secondary)]">countr{countryCount !== 1 ? 'ies' : 'y'}</span>
-          </div>
-        </div>
+    <div className="flex-1 overflow-y-auto scrollbar-thin min-h-0">
+      {/* Sort + filter feedback row */}
+      <div className="flex items-center justify-between px-4 py-2.5 sticky top-0 bg-[var(--color-bg)] border-b border-[var(--color-border)] z-10">
+        {isFiltered ? (
+          <span className="text-xs text-[var(--color-text-secondary)]">
+            {filteredCount} of {totalCount}
+          </span>
+        ) : (
+          <span />
+        )}
 
-        <div className="relative">
+        <div className="relative flex items-center">
           <select
             value={sortOrder}
             onChange={(e) => onSortChange(e.target.value as SortOrder)}
-            className="input pr-8 py-1.5 text-sm w-auto min-w-[140px] appearance-none bg-[var(--color-bg)]"
+            className="appearance-none text-xs font-medium text-[var(--color-text-secondary)]
+                       bg-transparent border-none pr-5 pl-0 py-1 cursor-pointer
+                       focus:outline-none focus:text-[var(--color-text)]"
             aria-label="Sort places"
           >
             {SORT_OPTIONS.map((opt) => (
@@ -107,11 +99,11 @@ export const PlaceList = memo(function PlaceList({
             ))}
           </select>
           <svg
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-secondary)] pointer-events-none"
+            className="absolute right-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--color-text-secondary)] pointer-events-none"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="2.5"
             aria-hidden="true"
           >
             <polyline points="6 9 12 15 18 9" />
@@ -119,51 +111,56 @@ export const PlaceList = memo(function PlaceList({
         </div>
       </div>
 
-      {/* Empty state */}
-      {processedPlaces.length === 0 && (
-        <div className="flex flex-col items-center justify-center h-64 text-center px-6">
-          <svg
-            className="w-12 h-12 text-[var(--color-text-secondary)] mb-3"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            aria-hidden="true"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            <line x1="8" y1="8" x2="14" y2="14" />
-            <line x1="8" y1="14" x2="14" y2="8" />
-          </svg>
-          <p className="text-[var(--color-text-secondary)]">
-            {filter.trim()
-              ? `No places match "${filter}"`
-              : 'No places visited yet'}
-          </p>
-          {filter.trim() && (
-            <button
-              onClick={() => handleItemHover(null)}
-              className="mt-2 btn-ghost text-sm"
-            >
-              Clear filter
-            </button>
-          )}
-        </div>
-      )}
+      <div className="p-2">
+        {/* Empty state */}
+        {processedPlaces.length === 0 && (
+          <div className="flex flex-col items-center justify-center h-56 text-center px-6">
+            <div className="w-12 h-12 rounded-full bg-[var(--color-bg-secondary)] flex items-center justify-center mb-3">
+              <svg
+                className="w-6 h-6 text-[var(--color-text-secondary)]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <line x1="8" y1="8" x2="14" y2="14" />
+                <line x1="8" y1="14" x2="14" y2="8" />
+              </svg>
+            </div>
+            <p className="text-sm font-medium text-[var(--color-text)]">
+              {filter.trim() ? 'No matches' : 'No places yet'}
+            </p>
+            <p className="text-xs text-[var(--color-text-secondary)] mt-1">
+              {filter.trim() ? `Nothing for "${filter}"` : 'Add your first trip to get started'}
+            </p>
+            {filter.trim() && (
+              <button
+                onClick={() => onFilterChange('')}
+                className="mt-3 text-xs font-medium text-[var(--color-accent)] hover:underline focus:outline-none"
+              >
+                Clear filter
+              </button>
+            )}
+          </div>
+        )}
 
-      {/* Places list */}
-      <div className="space-y-1.5" role="list" aria-label="Visited places">
-        {processedPlaces.map((place) => (
-          <PlaceListItem
-            key={place.id}
-            place={place}
-            isSelected={selectedPlaceId === place.id}
-            isHovered={hoveredPlaceId === place.id}
-            onClick={() => handleItemClick(place)}
-            onMouseEnter={() => handleItemHover(place.id)}
-            onMouseLeave={() => handleItemHover(null)}
-          />
-        ))}
+        {/* Places list */}
+        <div role="list" aria-label="Visited places">
+          {processedPlaces.map((place) => (
+            <PlaceListItem
+              key={place.id}
+              place={place}
+              isSelected={selectedPlaceId === place.id}
+              isHovered={hoveredPlaceId === place.id}
+              onClick={() => handleItemClick(place)}
+              onMouseEnter={() => handleItemHover(place.id)}
+              onMouseLeave={() => handleItemHover(null)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

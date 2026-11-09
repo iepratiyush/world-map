@@ -10,25 +10,25 @@ import { PlacePopup } from './PlacePopup';
 function createMarkerIcon(isSelected: boolean = false) {
   return L.divIcon({
     className: `custom-marker ${isSelected ? 'selected' : ''}`,
-    html: '<div class="marker-dot"></div>',
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-    popupAnchor: [0, -12],
+    html: '',
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
+    popupAnchor: [0, -11],
   });
 }
 
-// Cluster icon creation
 function createClusterIcon(cluster: any) {
   const count = cluster.getChildCount();
   let className = 'custom-marker-cluster custom-marker-cluster-small';
-  if (count >= 100) className = 'custom-marker-cluster custom-marker-cluster-large';
-  else if (count >= 10) className = 'custom-marker-cluster custom-marker-cluster-medium';
+  let size = 36;
+  if (count >= 100) { className = 'custom-marker-cluster custom-marker-cluster-large'; size = 52; }
+  else if (count >= 10) { className = 'custom-marker-cluster custom-marker-cluster-medium'; size = 44; }
 
   return L.divIcon({
     className,
-    html: `<div><span>${count}</span></div>`,
-    iconSize: count >= 100 ? [60, 60] : count >= 10 ? [50, 50] : [40, 40],
-    iconAnchor: count >= 100 ? [30, 30] : count >= 10 ? [25, 25] : [20, 20],
+    html: `<span>${count}</span>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
   });
 }
 
@@ -109,15 +109,24 @@ export function MapView({
   const internalMapRef = useRef<L.Map | null>(null);
   const mapRef = forwardedRef || internalMapRef;
 
-  // Always use OSM tiles; dark mode is applied via CSS filter on the tile pane
   const tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   const tileAttribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+  // Compute initial bounds from places so MapContainer opens at the right view
+  // with no animation and no flash. MapContainer only reads these once at mount.
+  const initialBounds =
+    places.length >= 2
+      ? (L.latLngBounds(places.map((p) => [p.lat, p.lng] as [number, number])))
+      : null;
+
+  const containerProps = initialBounds
+    ? { bounds: initialBounds, boundsOptions: { padding: [60, 60] as [number, number], maxZoom: 8 } }
+    : { center: viewport.center, zoom: viewport.zoom };
 
   return (
     <MapContainer
       ref={mapRef as any}
-      center={viewport.center}
-      zoom={viewport.zoom}
+      {...containerProps}
       zoomControl={false}
       scrollWheelZoom={true}
       doubleClickZoom={true}
@@ -126,15 +135,9 @@ export function MapView({
       keyboard={true}
       minZoom={2}
       maxZoom={18}
-      maxBounds={[
-        [-90, -180],
-        [90, 180],
-      ]}
+      maxBounds={[[-90, -180], [90, 180]]}
       maxBoundsViscosity={1.0}
       style={{ width: '100%', height: '100%' }}
-      whenReady={() => {
-        // Map is ready, ref will be set via forwardedRef
-      }}
     >
       <TileLayer
         url={tileUrl}
@@ -236,7 +239,7 @@ export function ZoomControls({ mapRef }: ZoomControlsProps) {
   };
 
   return (
-    <div className="absolute bottom-4 right-4 flex flex-col gap-1 z-10">
+    <div className="absolute bottom-8 right-4 flex flex-col gap-1 z-10">
       <button
         onClick={handleZoomIn}
         className="btn-secondary w-10 h-10 p-0"

@@ -1,4 +1,4 @@
-import { memo, useRef, useEffect } from 'react';
+import { memo, useRef, useEffect, useState } from 'react';
 import type { Place } from '../types';
 import { usePhotos, getPhotoCount } from '../hooks/usePhotos';
 import { format } from 'date-fns';
@@ -23,11 +23,11 @@ export const PlaceListItem = memo(function PlaceListItem({
   const photos = usePhotos(place.id);
   const photoCount = getPhotoCount(place.id);
   const firstPhoto = photos[0];
+  const [imgError, setImgError] = useState(false);
 
-  const formattedDate = format(new Date(place.visitedOn), 'MMMM yyyy');
+  const formattedDate = format(new Date(place.visitedOn), 'MMM yyyy');
   const itemRef = useRef<HTMLDivElement>(null);
 
-  // Scroll into view when selected
   useEffect(() => {
     if (isSelected && itemRef.current) {
       itemRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -40,11 +40,14 @@ export const PlaceListItem = memo(function PlaceListItem({
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={`group relative flex gap-3 p-3 rounded-xl transition-all cursor-pointer ${
-        isSelected
-          ? 'bg-[var(--color-accent-bg)] border-l-4 border-[var(--color-accent)]'
+      className={`group relative flex gap-3 pl-4 pr-3 py-3 rounded-xl cursor-pointer select-none
+        transition-colors duration-150
+        ${isSelected
+          ? 'bg-[var(--color-accent-bg)]'
           : 'hover:bg-[var(--color-bg-secondary)]'
-      } ${isHovered && !isSelected ? 'bg-[var(--color-bg-secondary)]' : ''}`}
+        }
+        ${isHovered && !isSelected ? 'bg-[var(--color-bg-secondary)]' : ''}
+      `}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
@@ -56,58 +59,74 @@ export const PlaceListItem = memo(function PlaceListItem({
       aria-selected={isSelected}
       aria-label={`${place.city}, ${place.country}, visited ${formattedDate}`}
     >
+      {/* Left accent bar */}
+      {isSelected && (
+        <div
+          className="absolute left-0 top-3 bottom-3 w-[3px] bg-[var(--color-accent)] rounded-r-full"
+          aria-hidden="true"
+        />
+      )}
+
       {/* Thumbnail */}
-      <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-[var(--color-border)]">
-        {firstPhoto ? (
+      <div className="relative w-[68px] h-[68px] shrink-0 rounded-xl overflow-hidden bg-[var(--color-bg-secondary)]">
+        {firstPhoto && !imgError ? (
           <img
             src={firstPhoto.url}
-            alt={`Photo of ${place.city}, ${place.country}`}
+            alt=""
             className="w-full h-full object-cover"
             loading="lazy"
             decoding="async"
+            onError={() => setImgError(true)}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-[var(--color-text-secondary)]">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+          <div className="w-full h-full flex items-center justify-center text-[var(--color-border)]">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="3" />
               <circle cx="8.5" cy="8.5" r="1.5" />
               <polyline points="21 15 16 10 5 21" />
             </svg>
           </div>
         )}
-        {photoCount > 1 && (
-          <span className="absolute bottom-1 right-1 bg-black/60 text-white text-xs px-1.5 py-0.5 rounded">
+        {firstPhoto && !imgError && photoCount > 1 && (
+          <div className="absolute bottom-1 right-1 bg-black/65 text-white text-[10px] font-medium px-1.5 py-[3px] rounded-md leading-none">
             +{photoCount - 1}
-          </span>
+          </div>
         )}
       </div>
 
       {/* Info */}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0">
-            <h4 className="font-medium text-[var(--color-text)] truncate">{place.city}</h4>
-            <p className="text-sm text-[var(--color-text-secondary)] truncate">{place.country}</p>
-          </div>
+      <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
+        <div>
+          <h4 className="text-[14px] font-semibold text-[var(--color-text)] truncate leading-snug">
+            {place.city}
+          </h4>
+          <p className="text-[12px] text-[var(--color-text-secondary)] truncate mt-0.5">
+            {place.country}
+          </p>
         </div>
-        <div className="mt-1 flex items-center gap-1.5 text-xs text-[var(--color-text-secondary)]">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-            <line x1="16" y1="2" x2="16" y2="6" />
-            <line x1="8" y1="2" x2="8" y2="6" />
-            <line x1="3" y1="10" x2="21" y2="10" />
-          </svg>
-          <span className="truncate">{formattedDate}</span>
+
+        <div className="flex items-center gap-2 mt-1.5">
+          <span className="inline-block text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-bg-secondary)] px-2 py-[3px] rounded-md font-medium leading-none border border-[var(--color-border)]">
+            {formattedDate}
+          </span>
+          {photoCount > 0 && (
+            <span className="inline-flex items-center gap-1 text-[11px] text-[var(--color-accent)] leading-none font-medium">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+              {photoCount}
+            </span>
+          )}
         </div>
+
         {place.note && (
-          <p className="mt-1 text-xs text-[var(--color-text-secondary)] line-clamp-2">{place.note}</p>
+          <p className="text-[11px] text-[var(--color-text-secondary)] line-clamp-1 mt-1 leading-relaxed">
+            {place.note}
+          </p>
         )}
       </div>
-
-      {/* Selected indicator */}
-      {isSelected && (
-        <div className="absolute inset-0 border-2 border-[var(--color-accent)] rounded-xl pointer-events-none" aria-hidden="true" />
-      )}
     </div>
   );
 });

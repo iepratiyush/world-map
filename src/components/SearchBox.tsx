@@ -121,7 +121,7 @@ export const SearchBox = memo(function SearchBox({
         <input
           ref={inputRef}
           id="search-input"
-          type="search"
+          type="text"
           value={value}
           onChange={handleChange}
           onFocus={handleFocus}
@@ -160,6 +160,13 @@ export const SearchBox = memo(function SearchBox({
         )}
       </div>
 
+      {/* Screen-reader announcements for search status */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {loading && 'Searching…'}
+        {!loading && showDropdown && suggestions.length > 0 && `${suggestions.length} result${suggestions.length !== 1 ? 's' : ''} found`}
+        {!loading && showDropdown && suggestions.length === 0 && value.trim() && !error && 'No results found'}
+      </div>
+
       {/* Dropdown */}
       {showDropdown && (
         <div
@@ -175,45 +182,47 @@ export const SearchBox = memo(function SearchBox({
           )}
 
           {suggestions.length === 0 && !loading && !error && value.trim() && (
-            <div className="p-3 text-sm text-[var(--color-text-secondary)]" role="option">
+            <div className="px-4 py-3 text-sm text-[var(--color-text-secondary)]" role="option">
               No results found
             </div>
           )}
 
-          {suggestions.map((suggestion, index) => (
-            <button
-              key={suggestion.id}
-              id={`suggestion-${index}`}
-              role="option"
-              aria-selected={index === highlightedIndex}
-              onClick={() => {
-                onSelect(suggestion);
-                setShowDropdown(false);
-              }}
-              onMouseEnter={() => setHighlightedIndex(index)}
-              className={`w-full px-3 py-2.5 text-left flex items-center gap-2 transition-colors ${
-                index === highlightedIndex
-                  ? 'bg-[var(--color-accent-bg)] text-[var(--color-accent)]'
-                  : 'hover:bg-[var(--color-bg-secondary)] text-[var(--color-text)]'
-              }`}
-            >
-              <svg
-                className="w-5 h-5 flex-shrink-0"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                aria-hidden="true"
+          <div className="p-1.5 space-y-0.5">
+            {suggestions.map((suggestion, index) => (
+              <button
+                key={suggestion.id}
+                id={`suggestion-${index}`}
+                role="option"
+                aria-selected={index === highlightedIndex}
+                onClick={() => {
+                  onSelect(suggestion);
+                  setShowDropdown(false);
+                }}
+                onMouseEnter={() => setHighlightedIndex(index)}
+                className={`w-full px-3 py-2 rounded-lg text-left flex items-center gap-2.5 transition-colors ${
+                  index === highlightedIndex
+                    ? 'bg-[var(--color-accent-bg)] text-[var(--color-accent)]'
+                    : 'hover:bg-[var(--color-bg-secondary)] text-[var(--color-text)]'
+                }`}
               >
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              <span className="text-sm truncate">{suggestion.label}</span>
-            </button>
-          ))}
+                <svg
+                  className="w-4 h-4 shrink-0 text-[var(--color-text-secondary)]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden="true"
+                >
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span className="text-sm truncate">{suggestion.label}</span>
+              </button>
+            ))}
+          </div>
 
           {suggestions.length === 0 && !loading && !error && !value.trim() && (
-            <div className="p-3 text-sm text-[var(--color-text-secondary)]" role="option" aria-disabled="true">
+            <div className="px-4 py-3 text-sm text-[var(--color-text-secondary)]" role="option" aria-disabled="true">
               Start typing to search…
             </div>
           )}

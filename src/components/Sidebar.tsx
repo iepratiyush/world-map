@@ -1,4 +1,4 @@
-import { memo, useState, useCallback, useEffect, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { SearchBox } from './SearchBox';
 import { PlaceList } from './PlaceList';
 import { ThemeToggle } from './ThemeToggle';
@@ -11,7 +11,6 @@ interface SidebarProps {
   filter: string;
   sortOrder: SortOrder;
   searchPin: SearchSuggestion | null;
-  isMobile: boolean;
   isSidebarOpen: boolean;
   onPlaceClick: (place: Place) => void;
   onPlaceHover: (placeId: string | null) => void;
@@ -24,13 +23,80 @@ interface SidebarProps {
   theme: 'light' | 'dark';
 }
 
+function StatBadge({
+  icon,
+  label,
+  accent = false,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  accent?: boolean;
+}) {
+  return (
+    <div
+      className={`flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg border ${
+        accent
+          ? 'bg-[var(--color-accent-bg)] text-[var(--color-accent)] border-[var(--color-accent-bg)]'
+          : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-secondary)] border-[var(--color-border)]'
+      }`}
+    >
+      {icon}
+      {label}
+    </div>
+  );
+}
+
+function SidebarHeader({
+  placeCount,
+  countryCount,
+  onToggleTheme,
+  theme,
+}: {
+  placeCount: number;
+  countryCount: number;
+  onToggleTheme: () => void;
+  theme: 'light' | 'dark';
+}) {
+  return (
+    <div className="px-5 pt-5 pb-4 border-b border-[var(--color-border)] shrink-0">
+      <div className="flex items-start justify-between mb-3">
+        <h2 className="text-[15px] font-semibold text-[var(--color-text)] leading-snug pr-2">
+          Trip down the memory lane
+        </h2>
+        <ThemeToggle onToggle={onToggleTheme} theme={theme} />
+      </div>
+      <div className="flex items-center gap-2">
+        <StatBadge
+          accent
+          icon={
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+          }
+          label={`${placeCount} place${placeCount !== 1 ? 's' : ''}`}
+        />
+        <StatBadge
+          icon={
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+          }
+          label={`${countryCount} countr${countryCount !== 1 ? 'ies' : 'y'}`}
+        />
+      </div>
+    </div>
+  );
+}
+
 export const Sidebar = memo(function Sidebar({
   places,
   selectedPlaceId,
   hoveredPlaceId,
   filter,
   sortOrder,
-  isMobile,
   isSidebarOpen,
   onPlaceClick,
   onPlaceHover,
@@ -42,134 +108,119 @@ export const Sidebar = memo(function Sidebar({
   onToggleTheme,
   theme,
 }: SidebarProps) {
-  const [searchValue, setSearchValue] = useState(filter);
-
-  // Sync search value with filter prop
-  useEffect(() => {
-    setSearchValue(filter);
-  }, [filter]);
-
   const handleSearchChange = useCallback((value: string) => {
-    setSearchValue(value);
     onFilterChange(value);
   }, [onFilterChange]);
 
   const handleSearchClear = useCallback(() => {
-    setSearchValue('');
     onFilterChange('');
     onSearchClear();
   }, [onFilterChange, onSearchClear]);
 
-  // Calculate country count
   const countryCount = useMemo(
     () => new Set(places.map((p) => p.country)).size,
     [places]
   );
 
-  // Mobile bottom sheet
-  if (isMobile) {
-    return (
-      <>
-        {/* Backdrop */}
-        {isSidebarOpen && (
-          <div
-            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-            onClick={onCloseSidebar}
-            aria-hidden="true"
-          />
-        )}
+  const sharedList = (
+    <PlaceList
+      places={places}
+      selectedPlaceId={selectedPlaceId}
+      hoveredPlaceId={hoveredPlaceId}
+      filter={filter}
+      sortOrder={sortOrder}
+      onPlaceClick={onPlaceClick}
+      onPlaceHover={onPlaceHover}
+      onSortChange={onSortChange}
+      onFilterChange={onFilterChange}
+      totalCount={places.length}
+      countryCount={countryCount}
+    />
+  );
 
-        {/* Bottom Sheet */}
-        <div
-          className={`fixed bottom-0 left-0 right-0 z-50 lg:hidden transition-transform duration-300 ease-out ${
-            isSidebarOpen ? 'translate-y-0' : 'translate-y-full'
-          }`}
-          role="dialog"
-          aria-label="Trip down the memory lane"
-          aria-modal={isSidebarOpen}
-        >
-          {/* Handle bar */}
+  const sharedSearch = (
+    <div className="px-4 py-3 border-b border-[var(--color-border)] shrink-0">
+      <SearchBox
+        value={filter}
+        onChange={handleSearchChange}
+        onSelect={onSearchSelect}
+        onClear={handleSearchClear}
+      />
+    </div>
+  );
+
+  return (
+    <>
+      {/*
+        ── Desktop sidebar ──────────────────────────────────────────────
+        Always visible on lg+. Hidden on smaller screens via `hidden lg:flex`.
+        No JS required — pure CSS breakpoint.
+      */}
+      <aside
+        className="fixed left-0 top-0 bottom-0 w-[380px]
+                   bg-[var(--color-bg)] border-r border-[var(--color-border)]
+                   flex-col z-[800]
+                   hidden lg:flex"
+        role="complementary"
+        aria-label="Places"
+      >
+        {/* Accent top stripe */}
+        <div className="h-[3px] bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-hover)] shrink-0" />
+        <SidebarHeader
+          placeCount={places.length}
+          countryCount={countryCount}
+          onToggleTheme={onToggleTheme}
+          theme={theme}
+        />
+        {sharedSearch}
+        {sharedList}
+      </aside>
+
+      {/*
+        ── Mobile / tablet bottom sheet ─────────────────────────────────
+        Hidden on lg+ via `lg:hidden`. Shown/hidden by translate transform.
+        Always in the DOM from first paint — no JS breakpoint, no flash.
+      */}
+      {/* Backdrop */}
+      <div
+        className={`fixed inset-0 z-[750] lg:hidden transition-opacity duration-300 ${
+          isSidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        } bg-black/50`}
+        onClick={onCloseSidebar}
+        aria-hidden="true"
+      />
+
+      {/* Sheet */}
+      <div
+        className={`fixed bottom-0 left-0 right-0 z-[800] lg:hidden
+                    transition-transform duration-300 ease-out
+                    ${isSidebarOpen ? 'translate-y-0' : 'translate-y-full'}`}
+        role="dialog"
+        aria-label="Places"
+        aria-modal={isSidebarOpen}
+      >
+        <div className="flex flex-col h-[calc(100dvh-60px)] max-h-[75dvh]
+                        bg-[var(--color-bg)] rounded-t-2xl shadow-xl overflow-hidden">
+          {/* Drag handle */}
           <button
             onClick={onCloseSidebar}
-            className="w-full px-4 py-3 flex items-center justify-center border-b border-[var(--color-border)] bg-[var(--color-bg)]"
-            aria-label={isSidebarOpen ? 'Close places list' : 'Open places list'}
+            className="w-full px-4 py-3 flex items-center justify-center shrink-0
+                       focus:outline-none"
+            aria-label="Close places list"
           >
             <div className="w-10 h-1 bg-[var(--color-border)] rounded-full" />
           </button>
 
-          {/* Sheet content */}
-          <div className="flex flex-col h-[calc(100vh-60px)] max-h-[70vh] bg-[var(--color-bg)] rounded-t-2xl shadow-xl overflow-hidden">
-            {/* Header */}
-            <div className="p-4 border-b border-[var(--color-border)] flex items-center justify-between">
-              <h2 className="font-semibold text-[var(--color-text)]">Trip down the memory lane</h2>
-              <ThemeToggle onToggle={onToggleTheme} theme={theme} />
-            </div>
-
-            {/* Search */}
-            <div className="p-4 border-b border-[var(--color-border)]">
-              <SearchBox
-                value={searchValue}
-                onChange={handleSearchChange}
-                onSelect={onSearchSelect}
-                onClear={handleSearchClear}
-              />
-            </div>
-
-            {/* List */}
-            <PlaceList
-              places={places}
-              selectedPlaceId={selectedPlaceId}
-              hoveredPlaceId={hoveredPlaceId}
-              filter={filter}
-              sortOrder={sortOrder}
-              onPlaceClick={onPlaceClick}
-              onPlaceHover={onPlaceHover}
-              onSortChange={onSortChange}
-              totalCount={places.length}
-              countryCount={countryCount}
-            />
-          </div>
+          <SidebarHeader
+            placeCount={places.length}
+            countryCount={countryCount}
+            onToggleTheme={onToggleTheme}
+            theme={theme}
+          />
+          {sharedSearch}
+          {sharedList}
         </div>
-      </>
-    );
-  }
-
-  // Desktop sidebar
-  return (
-    <aside
-      className="fixed left-0 top-0 bottom-0 w-[380px] bg-[var(--color-bg)] border-r border-[var(--color-border)] flex-col z-30 hidden lg:flex"
-      role="complementary"
-      aria-label="Trip down the memory lane"
-    >
-      {/* Header */}
-      <div className="p-4 border-b border-[var(--color-border)] flex items-center justify-between">
-        <h2 className="font-semibold text-[var(--color-text)]">Trip down the memory lane</h2>
-        <ThemeToggle onToggle={onToggleTheme} theme={theme} />
       </div>
-
-      {/* Search */}
-      <div className="p-4 border-b border-[var(--color-border)]">
-        <SearchBox
-          value={searchValue}
-          onChange={handleSearchChange}
-          onSelect={onSearchSelect}
-          onClear={handleSearchClear}
-        />
-      </div>
-
-      {/* List */}
-      <PlaceList
-        places={places}
-        selectedPlaceId={selectedPlaceId}
-        hoveredPlaceId={hoveredPlaceId}
-        filter={filter}
-        sortOrder={sortOrder}
-        onPlaceClick={onPlaceClick}
-        onPlaceHover={onPlaceHover}
-        onSortChange={onSortChange}
-        totalCount={places.length}
-        countryCount={countryCount}
-      />
-    </aside>
+    </>
   );
 });
