@@ -5,24 +5,23 @@ import Counter from 'yet-another-react-lightbox/plugins/counter';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import Captions from 'yet-another-react-lightbox/plugins/captions';
 import 'yet-another-react-lightbox/styles.css';
-import type { Place, Photo } from '../types';
+import type { Place, PlacePhoto } from '../types';
 
 interface PhotoLightboxProps {
   isOpen: boolean;
   onClose: () => void;
   place: Place | null;
-  photos: Photo[];
+  photos: PlacePhoto[];
 }
 
 export function PhotoLightbox({ isOpen, onClose, place, photos }: PhotoLightboxProps) {
-  // Prepare lightbox items with captions from place.captions
-  // yet-another-react-lightbox captions plugin expects `title` and `description` properties
+  // Prepare lightbox items - PlacePhoto already has url and caption
   const items = useMemo(() => {
     if (!place || photos.length === 0) return [];
 
     return photos.map((photo) => ({
       src: photo.url,
-      title: place.captions?.[photo.filename],
+      title: photo.caption,
       description: undefined,
       thumbnail: photo.url,
     }));

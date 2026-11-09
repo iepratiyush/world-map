@@ -1,3 +1,8 @@
+export interface PlacePhoto {
+  url: string;
+  caption: string;
+}
+
 export interface Place {
   id: string;
   city: string;
@@ -6,7 +11,7 @@ export interface Place {
   lng: number;
   visitedOn: string; // ISO date string (YYYY-MM-DD)
   note?: string;
-  captions?: Record<string, string>; // filename -> caption
+  photos?: PlacePhoto[]; // Cloudinary URLs with captions
 }
 
 export interface Photo {
