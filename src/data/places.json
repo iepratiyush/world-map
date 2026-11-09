@@ -8,9 +8,9 @@
     "visitedOn": "2025-10-19",
     "note": "BLDP trip",
     "photos": [
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/dallas-us/1.jpeg", "caption": "Texas Star Ferris Wheel at the State Fair of Texas" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/dallas-us/2.jpeg", "caption": "Iconic longhorn sculpture at Fair Park" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/dallas-us/3.jpeg", "caption": "Rodeo night at the arena" }
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/dallas-us/1.jpg", "caption": "Texas Star Ferris Wheel at the State Fair of Texas" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/dallas-us/2.jpg", "caption": "Iconic longhorn sculpture at Fair Park" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/dallas-us/3.jpg", "caption": "Rodeo night at the arena" }
     ]
   },
   {
@@ -22,9 +22,9 @@
     "visitedOn": "2024-09-07",
     "note": "First TLC visit",
     "photos": [
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/fort-worth-us/1.jpeg", "caption": "Dinner with friends" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/fort-worth-us/2.jpeg", "caption": "Stockyards Station" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/fort-worth-us/3.jpeg", "caption": "Classic lifted truck" }
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/fort-worth-us/1.jpg", "caption": "Dinner with friends" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/fort-worth-us/2.jpg", "caption": "Stockyards Station" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/fort-worth-us/3.jpg", "caption": "Classic lifted truck" }
     ]
   },
   {
@@ -36,9 +36,9 @@
     "visitedOn": "2024-05-27",
     "note": "Anniversary Trip",
     "photos": [
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/pahalgam-in/1.jpeg", "caption": "Lovely kamshmiri kids" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/pahalgam-in/2.jpeg", "caption": "Scenic valley" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/pahalgam-in/3.jpeg", "caption": "Sparkling clean and chilling cold glacier water" }
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/pahalgam-in/1.jpg", "caption": "Lovely kamshmiri kids" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/pahalgam-in/2.jpg", "caption": "Scenic valley" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/pahalgam-in/3.jpg", "caption": "Sparkling clean and chilling cold glacier water" }
     ]
   },
   {
@@ -50,9 +50,9 @@
     "visitedOn": "2024-05-26",
     "note": "Anniversary Trip",
     "photos": [
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/gulmarg-in/1.jpeg", "caption": "Gondola ride through breathtaking views" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/gulmarg-in/2.jpeg", "caption": "Gondola ride through breathtaking views" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/gulmarg-in/3.jpeg", "caption": "Scenic Snowy beauty" }
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/gulmarg-in/1.jpg", "caption": "Gondola ride through breathtaking views" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/gulmarg-in/2.jpg", "caption": "Gondola ride through breathtaking views" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/gulmarg-in/3.jpg", "caption": "Scenic Snowy beauty" }
     ]
   },
   {
@@ -64,9 +64,9 @@
     "visitedOn": "2024-05-24",
     "note": "Anniversary Trip",
     "photos": [
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/sonmarg-in/1.jpeg", "caption": "Horse riding towards the snow-capped Himalayan peaks" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/sonmarg-in/2.jpeg", "caption": "Panoramic view of the Sonmarg valley" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/sonmarg-in/3.jpeg", "caption": "Sitting on a glacier with the valley stretching below" }
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/sonmarg-in/1.jpg", "caption": "Horse riding towards the snow-capped Himalayan peaks" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/sonmarg-in/2.jpg", "caption": "Panoramic view of the Sonmarg valley" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/sonmarg-in/3.jpg", "caption": "Sitting on a glacier with the valley stretching below" }
     ]
   },
   {
@@ -78,9 +78,9 @@
     "visitedOn": "2024-05-22",
     "note": "Anniversary Trip",
     "photos": [
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/srinagar-in/1.jpeg", "caption": "Scenic boat ride on Dal lake" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/srinagar-in/2.jpeg", "caption": "Scenic boat ride on Dal lake" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/srinagar-in/3.jpeg", "caption": "Beautiful Dal lake" }
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/srinagar-in/1.jpg", "caption": "Scenic boat ride on Dal lake" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/srinagar-in/2.jpg", "caption": "Scenic boat ride on Dal lake" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/srinagar-in/3.jpg", "caption": "Beautiful Dal lake" }
     ]
   },
   {
@@ -92,9 +92,9 @@
     "visitedOn": "2024-01-01",
     "note": "Trip with Subhu and Harsh",
     "photos": [
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/udupi-in/1.jpeg", "caption": "Fun at St. mary island" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/udupi-in/2.jpeg", "caption": "Beautiful beaches on the way to murudeshwar" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/udupi-in/3.jpeg", "caption": "Scenic and peaceful kayaking" }
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/udupi-in/1.jpg", "caption": "Fun at St. mary island" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/udupi-in/2.jpg", "caption": "Beautiful beaches on the way to murudeshwar" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/udupi-in/3.jpg", "caption": "Scenic and peaceful kayaking" }
     ]
   },
   {
@@ -106,9 +106,9 @@
     "visitedOn": "2025-05-07",
     "note": "Nikhil's wedding trip",
     "photos": [
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/jaipur-in/1.jpeg", "caption": "Beuatiful symmetric artwork in Amer fort" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/jaipur-in/2.jpeg", "caption": "Amer fort visit with friends" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/jaipur-in/3.jpeg", "caption": "Hawa mahal" }
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/jaipur-in/1.jpg", "caption": "Beuatiful symmetric artwork in Amer fort" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/jaipur-in/2.jpg", "caption": "Amer fort visit with friends" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/jaipur-in/3.jpg", "caption": "Hawa mahal" }
     ]
   },
   {
@@ -120,9 +120,9 @@
     "visitedOn": "2025-01-14",
     "note": "Holi celebration trip",
     "photos": [
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/goa-in/1.jpeg", "caption": "Amazing Bean me up cafe" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/goa-in/2.jpeg", "caption": "Views at Chapora fort at vagator" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/goa-in/3.jpeg", "caption": "Holi party in cruise" }
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/goa-in/1.jpg", "caption": "Amazing Bean me up cafe" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/goa-in/2.jpg", "caption": "Views at Chapora fort at vagator" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/goa-in/3.jpg", "caption": "Holi party in cruise" }
     ]
   },
   {
@@ -134,9 +134,9 @@
     "visitedOn": "2025-06-16",
     "note": "Birthday trip in UNESCO City of India",
     "photos": [
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/hampi-in/1.jpeg", "caption": "Hampi Stone Chariot" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/hampi-in/2.jpeg", "caption": "Historic beautiful Vijay Vittala temple" },
-      { "url": "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/world-map/hampi-in/3.jpeg", "caption": "Beautiful Virupaksha temple" }
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/hampi-in/1.jpg", "caption": "Hampi Stone Chariot" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/hampi-in/2.jpg", "caption": "Historic beautiful Vijay Vittala temple" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/hampi-in/3.jpg", "caption": "Beautiful Virupaksha temple" }
     ]
   }
 ]
