@@ -174,6 +174,7 @@ export const MapView = memo(function MapView({
             <Popup
               autoClose={false}
               closeOnClick={false}
+              autoPan={false}
               className="custom-popup"
             >
               <PlacePopup
