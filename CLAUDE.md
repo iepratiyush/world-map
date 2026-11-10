@@ -32,7 +32,7 @@ src/
 │   ├── Sidebar.tsx      # Desktop sidebar / mobile bottom sheet
 │   └── ThemeToggle.tsx  # Light/dark mode toggle
 ├── hooks/
-│   ├── usePhotos.ts     # Photo asset loading via Vite glob
+│   ├── usePhotos.ts     # Photo lookup from places.json (Cloudinary URLs)
 │   ├── useTheme.tsx     # Theme persistence (localStorage + media query)
 │   ├── useGeocode.ts    # Nominatim geocoding for search
 │   └── useDebounce.ts   # Debounce utility
@@ -60,14 +60,14 @@ src/
   "lng": -78.9012,
   "visitedOn": "2024-01-01",
   "note": "Optional note",
-  "captions": {
-    "1.jpeg": "Caption for photo 1",
-    "2.jpeg": "Caption for photo 2"
-  }
+  "photos": [
+    { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/unique-place-id/1.jpg", "caption": "Caption for photo 1" },
+    { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/unique-place-id/2.jpg", "caption": "Caption for photo 2" }
+  ]
 }
 ```
 
-Photos go in `src/assets/photos/{place-id}/` matching the filenames in `captions`.
+Photos are hosted on Cloudinary under cloud name `uesrzvcy`, path `world-map/{place-id}/`.
 
 ## Commands
 
@@ -89,7 +89,7 @@ All state lives in `AppContent` component:
 - `searchPin` - Temporary search result pin
 
 ### Photo Loading (usePhotos.ts)
-Uses Vite's `import.meta.glob` with `?url` query to get public URLs for photo assets at build time. No runtime filesystem access needed.
+Reads the `photos` array directly from `places.json` for a given place ID. Photos are Cloudinary URLs — no local assets or Vite glob involved.
 
 ### Map Dark Mode
 Applied via CSS filter on `.leaflet-tile-pane` (inverts OSM tiles) - no Mapbox/paid tiles needed.
@@ -102,11 +102,9 @@ Applied via CSS filter on `.leaflet-tile-pane` (inverts OSM tiles) - no Mapbox/p
 
 ## Adding New Places
 
-1. Add entry to `src/data/places.json`
-2. Create folder `src/assets/photos/{id}/`
-3. Add photos named `1.jpeg`, `2.jpeg`, etc.
-4. Add captions in `places.json` matching filenames
-5. Run `npm run build`
+1. Add entry to `src/data/places.json` with the `photos` array
+2. Upload photos to Cloudinary under `world-map/{id}/` (named `1.jpg`, `2.jpg`, etc.)
+3. Run `npm run build`
 
 ## Environment
 
