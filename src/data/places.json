@@ -152,5 +152,19 @@
       { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/hampi-in/2.jpg", "caption": "Historic beautiful Vijay Vittala temple" },
       { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/hampi-in/3.jpg", "caption": "Beautiful Virupaksha temple" }
     ]
+  },
+  {
+    "id": "wayanad-in",
+    "city": "Wayanad",
+    "country": "India",
+    "lat": 11.6050,
+    "lng": 76.0830,
+    "visitedOn": "2023-01-07",
+    "note": "Trip with college friends",
+    "photos": [
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/wayanad-in/1.jpg", "caption": "Amazing view for Zostel" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/wayanad-in/2.jpg", "caption": "With friends at Banasura Dam" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/wayanad-in/3.jpg", "caption": "Fun at Makkiyad Waterfall" }
+    ]
   }
 ]
