@@ -194,5 +194,19 @@
       { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/coorg-in/2.jpg", "caption": "Abbey waterfall" },
       { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/coorg-in/3.jpg", "caption": "Namdroling Monastery Golden Buddha statue" }
     ]
+  },
+  {
+    "id": "chikmagalur-in",
+    "city": "Chikmagalur",
+    "country": "India",
+    "lat": 13.3161,
+    "lng": 75.7720,
+    "visitedOn": "2023-05-01",
+    "note": "Long weekend trip with friends",
+    "photos": [
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/chikmagalur-in/1.jpg", "caption": "Breathtaking view from Baba Budangiri and Mullayanagiri peak" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/chikmagalur-in/2.jpg", "caption": "Went to Jhari Waterfall on thrilling jeep ride" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/chikmagalur-in/3.jpg", "caption": "Beautful Ganesha statue in Hassan" }
+    ]
   }
 ]
