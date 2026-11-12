@@ -166,5 +166,19 @@
       { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/wayanad-in/2.jpg", "caption": "With friends at Banasura Dam" },
       { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/wayanad-in/3.jpg", "caption": "Fun at Makkiyad Waterfall" }
     ]
+  },
+  {
+    "id": "hyderabad-in",
+    "city": "Hyderabad",
+    "country": "India",
+    "lat": 17.387140,
+    "lng": 78.491684,
+    "visitedOn": "2022-12-19",
+    "note": "Sanjana's wedding trip",
+    "photos": [
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/hyderabad-in/1.jpg", "caption": "Architectural beauty of Charminar" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/hyderabad-in/2.jpg", "caption": "Sunset view from Charminar" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/hyderabad-in/3.jpg", "caption": "Hustle and bustle of market near Charminar" }
+    ]
   }
 ]
