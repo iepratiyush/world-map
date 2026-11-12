@@ -180,5 +180,19 @@
       { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/hyderabad-in/2.jpg", "caption": "Sunset view from Charminar" },
       { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/hyderabad-in/3.jpg", "caption": "Hustle and bustle of market near Charminar" }
     ]
+  },
+  {
+    "id": "coorg-in",
+    "city": "Coorg",
+    "country": "India",
+    "lat": 12.4208,
+    "lng": 75.7397,
+    "visitedOn": "2025-07-25",
+    "note": "Trip with Hunny and Ansu trip",
+    "photos": [
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/coorg-in/1.jpg", "caption": "Breathtaking viewpoint" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/coorg-in/2.jpg", "caption": "Abbey waterfall" },
+      { "url": "https://res.cloudinary.com/uesrzvcy/image/upload/v1/world-map/coorg-in/3.jpg", "caption": "Namdroling Monastery Golden Buddha statue" }
+    ]
   }
 ]
